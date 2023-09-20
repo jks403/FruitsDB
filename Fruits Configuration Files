@@ -83,8 +83,8 @@ collection.insertMany([
 
 
 Fruit.find()
- .then(function (fruits) {
+ .then((fruits) => {
   fruits.forEach((fruits) => {
     console.log(fruits.id, ":" , fruits.name, fruits.score, fruits.review);
-  })
- })
+  });
+ });
