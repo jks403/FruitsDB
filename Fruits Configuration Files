@@ -80,3 +80,11 @@ collection.insertMany([
 
 ])
 }
+
+
+Fruit.find()
+ .then(function (fruits) {
+  fruits.forEach((fruits) => {
+    console.log(fruits.id, ":" , fruits.name, fruits.score, fruits.review);
+  })
+ })
