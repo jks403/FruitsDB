@@ -80,6 +80,9 @@ collection.insertMany([
 
 ])
 }
+Fruit.insertMany([kiwi, orange, banana, pineapple, raspberries, watermellon, tomatoes], ) 
+  
+    console.log("successfully saved to fruitsDB");
 
 
 Fruit.find()
