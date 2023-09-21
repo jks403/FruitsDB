@@ -85,9 +85,37 @@ Fruit.insertMany([kiwi, orange, banana, pineapple, raspberries, watermellon, tom
     console.log("successfully saved to fruitsDB");
 
 
-Fruit.find()
- .then((fruits) => {
-  fruits.forEach((fruits) => {
-    console.log(fruits.id, ":" , fruits.name, fruits.score, fruits.review);
-  });
- });
+// now all fruits are inserted into the array.
+
+// find all fruits ====> use a For Loop to find all key : value fruits.id, fruits.name, fruits.score
+
+//Fruit.find()
+// .then((fruits) => {
+//  fruits.forEach((fruits) => {
+//    console.log(fruits.id, ":" , fruits.name, fruits.score, fruits.review);
+//  });
+// });
+
+async function findAllFruit() {
+  try {
+        const allFruit = await Fruit.find({});
+        mongoose.connection.close();
+        allFruit.forEach(fruit => {
+                console.log(fruit.name);
+        })
+      }  catch(error) {
+              console.log(error);
+      }
+}
+
+// call the function findAllFruit
+
+findAllFruit();
+
+
+
+
+
+
+
+
