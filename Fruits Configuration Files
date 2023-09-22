@@ -135,44 +135,6 @@ async function findAllFruit() {
               console.log(error);
       }
 
-Fruit.updateOne({_id:"                "}, <name:"Peach"}, function(err) {
-    if(err){
-     console.log(err);
-} else{ 
-        console.log("Successfully updated the document");
-}
-});
-
-
-Fruit.deleteOne({name: "Peach"}, function(err) {
-    if(err) {
-      console.log(err);
-} else{    
-      console.log("Successfully deleted the document");
-});
-
-
-
-
-Person.deleteMany({name: "John"}, function(err) {
-  if(err) {
-      console.log(err);
-} else{
-      console.log("successfully deleted the Person");
-});
-
-Person.updateOne({name: "John"}, 
-
-
-
-
-
-
-}
-
-// call the function findAllFruit
-
-findAllFruit();
 
 
 
