@@ -21,18 +21,46 @@ const fruit = new Fruit ({
 
 const personSchema = new mongoose.Schema({
   name: String,
-  age: Number
+  age: Number, 
+  favoriteFruit: fruitSchema
 
 });
   
 const Person = mongoose.model("Person", personSchema);
 
+const pineapple = new Fruit({
+name: "Pineapple", 
+score: 9, 
+review: "great fruit"
+});
+pineapple.save();
+
+
+
 const person = new Person({
-  name: "John", 
-  age: 37
+  name: "Amy", 
+  age: 12, 
+favoriteFruit: pineapple
 });
 
 person.save();
+
+
+Person.updateOne({name:"John"}, {favoriteFruit: mango}, function(err) {
+if(err){  
+     console.log(err);
+} else {
+      console.log("Successfully updated the document");
+}
+});
+
+const mango = new Fruit({
+name: "mango", 
+score: 6, 
+review: "Decent fruit", 
+});
+
+mango.save();
 
 
 const kiwi = new Fruit({
@@ -106,11 +134,47 @@ async function findAllFruit() {
       }  catch(error) {
               console.log(error);
       }
+
+Fruit.updateOne({_id:"                "}, <name:"Peach"}, function(err) {
+    if(err){
+     console.log(err);
+} else{ 
+        console.log("Successfully updated the document");
+}
+});
+
+
+Fruit.deleteOne({name: "Peach"}, function(err) {
+    if(err) {
+      console.log(err);
+} else{    
+      console.log("Successfully deleted the document");
+});
+
+
+
+
+Person.deleteMany({name: "John"}, function(err) {
+  if(err) {
+      console.log(err);
+} else{
+      console.log("successfully deleted the Person");
+});
+
+Person.updateOne({name: "John"}, 
+
+
+
+
+
+
 }
 
 // call the function findAllFruit
 
 findAllFruit();
+
+
 
 
 
