@@ -1,66 +1,104 @@
 
 
+
+
+
 const mongoose = require('mongoose');
 // Replace the uri string with your connection string.
-mongoose.connect("mongodb://127.0.0.1:27017/fruitsDB", {useNewUrlParser:true});
+const client = mongoose.connect("mongodb://127.0.0.1:27017/fruitsDB", {useNewUrlParser:true});
+
+const express = require('express');
+
+const app = express();
+
+async function main() {   
+try {
+    await client.connect();
+} catch (e) {
+  console.error(e);
+} finally {
+  await client.close();
+}
+
+}  
+
+ 
+
 
 const fruitSchema = new mongoose.Schema({
   name:String, 
-  rating: Number, 
+  rating: {
+    type: Number, 
+    min: 1, 
+    max: 10
+  }, 
   review: String 
 });
 
 const Fruit = mongoose.model("Fruit", fruitSchema);
 
-const fruit = new Fruit ({
+
+const peach = new Fruit({
+  name: "peach" ,
+  rating: 10, 
+  review: "Peaches are so yummy!  solid as a fruit"
+});
+
+
+
+const apple = new Fruit ({
   name: "Apple", 
-  rating: 7, 
+  rating: 10, 
   review: "Pretty solid as a fruit."
 });
-//fruit.save();
+
 
 const personSchema = new mongoose.Schema({
   name: String,
-  age: Number, 
-  favoriteFruit: fruitSchema 
+  age: Number,
+  favoriteFruit: fruitSchema
 
 });
   
 const Person = mongoose.model("Person", personSchema);
 
+
+
 const pineapple = new Fruit({
-name: "Pineapple", 
-score: 9, 
-review: "great fruit"
+  name: "pineapple", 
+  score: 8, 
+  review: "Great fruit"
 });
 pineapple.save();
 
 
 
-const person = new Person({
+const John = new Person({
+  name: "John", 
+  age: 37, 
+  favoriteFruit: apple
+});
+John.save();
+
+
+const Anna = new Person({
+  name: "Anna", 
+  age: 38, 
+  favoriteFruit: peach
+
+});
+Anna.save();
+
+
+const Amy = new Person({
   name: "Amy", 
   age: 12, 
-favoriteFruit: pineapple
+  favoriteFruit: pineapple
+  
 });
+Amy.save();
 
-person.save();
-
-
-Person.updateOne({name:"John"}, {favoriteFruit: mango}, function(err) {
-if(err){  
-     console.log(err);
-} else {
-      console.log("Successfully updated the document");
-}
-});
-
-const mango = new Fruit({
-name: "mango", 
-score: 6, 
-review: "Decent fruit", 
-});
-
-mango.save();
+  /*Amy.save(); */
 
 
 const kiwi = new Fruit({
@@ -69,11 +107,15 @@ const kiwi = new Fruit({
   review: "the best fruit"
 });
 
+kiwi.save();
+
 const orange = new Fruit({
   name : "orange", 
   score: 4, 
   review: "Too sour for me"
 });
+
+orange.save();
 
 const banana = new Fruit({
   name : "banana", 
@@ -81,67 +123,60 @@ const banana = new Fruit({
   review: "Weird texture"
 });
 
+banana.save();
 
-Fruit.insertMany([kiwi, orange, banana], ) 
+const raspberries = new Fruit({
+  name: "raspberries", 
+  score: 8, 
+  review: "very delicious and enjoyable right off the vine"
+
+});
+
+raspberries.save();
+
+const watermellon = new Fruit({
+  name: "watermellon", 
+  score: 10, 
+  review: "very refreshing on a hot day"
+});
+watermellon.save();
+
+
+const tomatoes = new Fruit({
+  name: "tomatoes", 
+  score: 10, 
+  review: "very refreshing on a hot day and good for the heart "
+});
+
+tomatoes.save();
+
+/* Fruit.insertMany([kiwi, orange, banana, raspberries, watermellon, tomatoes] ) ;
   
-    console.log("succes saved to fruitsDB");
+    console.log("successfully saved to fruitsDB"); */
+
+
+    /* Person.insertMany([Amy]); */
+
+
+
+ Fruit.find()
+ .then((fruits) => {
+  fruits.forEach((fruits) => {
+    console.log(fruits.id, ":" , fruits.name, fruits.score, fruits.review);
+  });
+ });
+
   
-
-
-const insertDocuments = function(db, callback) {
-
-
-const collection = db.collection('fruits');
-
-collection.insertMany([
-  {
-    name: "Apple", 
-    score: 8,
-    review: "Great fruit"
-  },
-  {
-    name: "orange",
-    score:6,
-    review: "kinda sour"
-  }
-
-
-])
-}
-Fruit.insertMany([kiwi, orange, banana, pineapple, raspberries, watermellon, tomatoes], ) 
+Person.find()
+.then((persons) => {
+  persons.forEach((persons) => {
+    console.log(persons.name, ":", persons.age, ":", persons.favoriteFruit);
+  });
+  mongoose.connection.close();
   
-    console.log("successfully saved to fruitsDB");
+});
 
-
-// now all fruits are inserted into the array.
-
-// find all fruits ====> use a For Loop to find all key : value fruits.id, fruits.name, fruits.score
-
-//Fruit.find()
-// .then((fruits) => {
-//  fruits.forEach((fruits) => {
-//    console.log(fruits.id, ":" , fruits.name, fruits.score, fruits.review);
-//  });
-// });
-
-async function findAllFruit() {
-  try {
-        const allFruit = await Fruit.find({});
-        mongoose.connection.close();
-        allFruit.forEach(fruit => {
-                console.log(fruit.name);
-        })
-      }  catch(error) {
-              console.log(error);
-      }
-
-
-
-
-
-
-
-
+  
 
 
 
