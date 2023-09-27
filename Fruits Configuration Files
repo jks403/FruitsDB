@@ -39,8 +39,15 @@ Person.createCollection().then(function (Person) {
         console.log("Collection is created !");
 });
 
-
-
+async function run() {
+await mongoose.connect('mongodb://localhost:27017');
+await Person.create({
+    name: 'Anna', 
+    age: 27, 
+    favoriteFruit: "peaches"
+});
+}
+run();
 
 
 const peach = new Fruit({
