@@ -11,31 +11,36 @@ const express = require('express');
 
 const app = express();
 
-async function main() {   
-try {
-    await client.connect();
-} catch (e) {
-  console.error(e);
-} finally {
-  await client.close();
-}
-
-}  
-
- 
-
 
 const fruitSchema = new mongoose.Schema({
   name:String, 
   rating: {
-    type: Number, 
-    min: 1, 
-    max: 10
-  }, 
+               type: Number, 
+               min: 1, 
+               max: 10
+         }, 
   review: String 
 });
 
 const Fruit = mongoose.model("Fruit", fruitSchema);
+
+const personSchema = new mongoose.Schema({
+  name: String,
+  age: Number,
+  favoriteFruit: fruitSchema
+
+});
+  
+
+////////////////////////////////////
+const Person = mongoose.model("Person", personSchema);
+
+Person.createCollection().then(function (Person) {
+        console.log("Collection is created !");
+});
+
+
+
 
 
 const peach = new Fruit({
@@ -53,14 +58,6 @@ const apple = new Fruit ({
 });
 
 
-const personSchema = new mongoose.Schema({
-  name: String,
-  age: Number,
-  favoriteFruit: fruitSchema
-
-});
-  
-const Person = mongoose.model("Person", personSchema);
 
 
 
@@ -176,7 +173,7 @@ Person.find()
   
 });
 
-  
+   
 
 
 
