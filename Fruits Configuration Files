@@ -1,53 +1,45 @@
 
 
 
-
-
 const mongoose = require('mongoose');
 // Replace the uri string with your connection string.
 const client = mongoose.connect("mongodb://127.0.0.1:27017/fruitsDB", {useNewUrlParser:true});
 
-const express = require('express');
+const {Schema} = mongoose;
 
-const app = express();
+
 
 
 const fruitSchema = new mongoose.Schema({
-  name:String, 
-  rating: {
-               type: Number, 
-               min: 1, 
-               max: 10
-         }, 
-  review: String 
+  name: String, 
+  rating: [{
+           type: Number, 
+           min: 1, 
+           max: 10
+          }], 
+    review: String 
 });
 
 const Fruit = mongoose.model("Fruit", fruitSchema);
 
-const personSchema = new mongoose.Schema({
-  name: String,
-  age: Number,
-  favoriteFruit: fruitSchema
 
-});
+
+async function insertFruit() {
   
-
-////////////////////////////////////
-const Person = mongoose.model("Person", personSchema);
-
-Person.createCollection().then(function (Person) {
-        console.log("Collection is created !");
-});
-
-async function run() {
-await mongoose.connect('mongodb://localhost:27017');
-await Person.create({
-    name: 'Anna', 
-    age: 27, 
-    favoriteFruit: "peaches"
-});
+  await Fruit.create({
+    name: 'Peach', 
+    rating: 10, 
+    review: "Peaches are so yummy!  solid as a fruit"
+  });
 }
-run();
+insertFruit();
+
+
+
+
+
+
+
 
 
 const peach = new Fruit({
@@ -55,8 +47,24 @@ const peach = new Fruit({
   rating: 10, 
   review: "Peaches are so yummy!  solid as a fruit"
 });
+peach.save();
+
+const cherries = new Fruit({
+  name: "cherries", 
+  rating: 9, 
+  review: "Cherries are so delicious! Tart and refreshing"
+});
+
+cherries.save();
 
 
+const grapes = new Fruit({
+  name: "grapes", 
+  rating: 8, 
+  review: "grapes are so delicious! Tart and refreshing"
+});
+
+grapes.save();
 
 const apple = new Fruit ({
   name: "Apple", 
@@ -64,45 +72,12 @@ const apple = new Fruit ({
   review: "Pretty solid as a fruit."
 });
 
-
-
-
-
 const pineapple = new Fruit({
   name: "pineapple", 
   score: 8, 
   review: "Great fruit"
 });
-pineapple.save();
 
-
-
-const John = new Person({
-  name: "John", 
-  age: 37, 
-  favoriteFruit: apple
-});
-John.save();
-
-
-const Anna = new Person({
-  name: "Anna", 
-  age: 38, 
-  favoriteFruit: peach
-
-});
-Anna.save();
-
-
-const Amy = new Person({
-  name: "Amy", 
-  age: 12, 
-  favoriteFruit: pineapple
-  
-});
-Amy.save();
-
-  /*Amy.save(); */
 
 
 const kiwi = new Fruit({
@@ -111,7 +86,6 @@ const kiwi = new Fruit({
   review: "the best fruit"
 });
 
-kiwi.save();
 
 const orange = new Fruit({
   name : "orange", 
@@ -119,7 +93,6 @@ const orange = new Fruit({
   review: "Too sour for me"
 });
 
-orange.save();
 
 const banana = new Fruit({
   name : "banana", 
@@ -127,7 +100,6 @@ const banana = new Fruit({
   review: "Weird texture"
 });
 
-banana.save();
 
 const raspberries = new Fruit({
   name: "raspberries", 
@@ -136,14 +108,12 @@ const raspberries = new Fruit({
 
 });
 
-raspberries.save();
 
 const watermellon = new Fruit({
   name: "watermellon", 
   score: 10, 
   review: "very refreshing on a hot day"
 });
-watermellon.save();
 
 
 const tomatoes = new Fruit({
@@ -152,35 +122,173 @@ const tomatoes = new Fruit({
   review: "very refreshing on a hot day and good for the heart "
 });
 
-tomatoes.save();
+
+
+
+
+
+
+
+const personSchema = new mongoose.Schema({
+  name: String,
+  age: Number,
+  favoriteFruit: fruitSchema
+
+});
+  
+const Person = mongoose.model("Person", personSchema);
+
+const Faye = new Person({
+  name: "Faye", 
+  age: 27, 
+  favoriteFruit: cherries
+});
+
+
+const Dulce = new Person({
+  name: "Dulce", 
+  age: 24, 
+  favoriteFruit: grapes
+});
+
+
+
+const John = new Person({
+  name: "John", 
+  age: 37, 
+  favoriteFruit: apple
+});
+
+
+const Anna = new Person({
+  name: "Anna", 
+  age: 38, 
+  favoriteFruit: peach
+
+});
+
+const Lakeia = new Person({
+  name: "Lakeia", 
+  age: 34, 
+  favoriteFruit: peach
+
+});
+ // Lakeia.save();
+
+const swope = new Person({
+  name: "michelle", 
+  age: 38, 
+  favoriteFruit: cherries
+
+});
+// swope.save();
+
+const Kenderry = new Person({
+  name: "Kenderry", 
+  age: 52, 
+  favoriteFruit: grapes
+
+});
+// Kenderry.save();
+
+const Aaron = new Person({
+  name: "Aaron Young", 
+  age: 52, 
+  favoriteFruit: grapes
+
+});
+// Aaron.save();
+
+
+const Nicole = new Person({
+  name: "Nicole Krela", 
+  age: 52, 
+  favoriteFruit: grapes
+
+});
+// Nicole.save();
+
+
+const Devon = new Person({
+  name: "Devon", 
+  age: 52, 
+  favoriteFruit: watermellon
+
+});
+/*  Devon.save(); */
+
+const Tanya = new Person({
+  name: "Tanya bullwinkle", 
+  age: 52, 
+  favoriteFruit: grapes
+
+});
+/* Tanya.save();*/
+
+const Sydney = new Person({
+  name: "Sydney Long", 
+  age: 52, 
+  favoriteFruit: kiwi
+
+});
+/*Sydney.save();/*
+
+
+const Amy = new Person({
+  name: "Amy", 
+  age: 12, 
+  favoriteFruit: peach
+  
+});
+
+  /* Person.insertMany(
+  [ {name: "Anna", age: 37, favoriteFruit: peach} , {name: "Faye", age: 27, favoriteFruit: grapes},
+   {name: "Dulce", age: 30, favoriteFruit: watermellon }
+  ]); This works, but the documents above work also. */
+
+
+
+
 
 /* Fruit.insertMany([kiwi, orange, banana, raspberries, watermellon, tomatoes] ) ;
   
     console.log("successfully saved to fruitsDB"); */
 
 
-    /* Person.insertMany([Amy]); */
+   /* Person.insertMany([Amy, Anna, John, Faye, Dulce]);  */
 
 
 
  Fruit.find()
  .then((fruits) => {
   fruits.forEach((fruits) => {
-    console.log(fruits.id, ":" , fruits.name, fruits.score, fruits.review);
+    console.log(fruits.id, ":" , fruits.name);
   });
  });
 
+
+ Fruit.updateOne({id_: "650f67304b214855b0c9ded6"}, {name: "Peach"})
+ 
+  Fruit.deleteOne({name: "Peach"})
+
+//  Person.deleteMany({name: "Amy"});
+  //Person.deleteOne({id_: "650cd1085eca59c1f9e90ccf"});
+ // Person.deleteOne({id_: "650cd1085eca59c1f9e90cce"});
+
+ // Person.deleteOne({id_: "650cd1ac5bd48296da08d3c1"});
+  //Person.deleteOne({id_: "650cd262cfb27b401cdda0ba"});
+  //Person.deleteOne({id_: "650cd2b470478ac73a3b9a25"});
+  //Person.deleteOne({id_: "650cd4f997543f7826273e07"});
   
+
+
+
+  
+
 Person.find()
 .then((persons) => {
   persons.forEach((persons) => {
     console.log(persons.name, ":", persons.age, ":", persons.favoriteFruit);
-  });
-  mongoose.connection.close();
-  
-});
-
    
-
-
-
+  });
+});  
